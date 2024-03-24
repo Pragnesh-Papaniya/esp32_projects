@@ -1,0 +1,27 @@
+channelID = 1067599;
+iftttURL = 'https://maker.ifttt.com/trigger/dht11/with/key/bGMO0bTI6pYTJRdw_WuQEm';
+readAPIKey = 'RKD8P8TAECJWPQZ0';
+thingSpeakURL = strcat('https://api.thingspeak.com/channels/',string(channelID),'/fields/1/last.txt');
+thingSpeakURLL = strcat('https://api.thingspeak.com/channels/',string(channelID),'/fields/2/last.txt');
+lastValue = str2double(webread(thingSpeakURL, 'api_key', readAPIKey));
+lastValue1 = str2double(webread(thingSpeakURLL, 'api_key', readAPIKey));
+if (lastValue<75)
+    disp(lastValue);
+    Message = 'HUMIDITY is normal';
+    disp(Message);
+    webwrite(iftttURL,'value1',lastValue,'value2',Message);
+elseif (78>lastValue)
+        disp(lastValue);
+    Message = 'HUMIDITY is Abnormal';
+      disp(Message);
+    webwrite(iftttURL,'value1',lastValue,'value2',Message);
+end
+if (34>lastValue1)
+        disp(lastValue1);
+
+    Message = 'Temperature value is abnormal';
+    webwrite(iftttURL,'value1',lastValue,'value2',Message);
+elseif (33<lastValue1)
+    Message = 'Temperature value is normal';
+    webwrite(iftttURL,'value1',lastValue,'value2',Message);
+end
